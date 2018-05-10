@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="col-xs-offset-1 col-xs-9">
+        <%= form_for(@current_list) do |f| %>
+        
+          <div class="form-group">
+            <%= f.label :title, 'タイトル', class: 'show-title' %>
+            <%= f.text_field :title, class: 'form-control title' %>
+            <hr></hr>
+          </div>
+          
+          <%= f.add_nested_fields_link :memos, 'Add new', class: 'btn btn-primary', role: 'button' %><br>
+          
+          <%= f.nested_fields_for :memos, wrapper_tag: :div do |m_form| %>
+            <div><%= m_form.label :memotitle, "メモ" %></div>
+            <div><%= m_form.text_field :memotitle, class: 'form-control' %></div>
+            <div><%= m_form.text_area :description, class: 'form-control' %></div>
+            <div><%= m_form.remove_nested_fields_link 'Delete', class: 'btn btn-danger pull-right', role: 'button' %></div><br>
+          <% end %>
+          
+          <div class="form-group">
+            <%= f.label :detail, '詳細', class: 'show-title' %>
+            <%= f.text_area :detail, class: 'form-control detail-title', id: 'copy-text' %>
+            <div class="count text-right"><%= @detail_len %></div>
+          </div>          
+          
+          <%= f.submit 'メモを保存', class: 'btn btn-primary' %>
+          
+        <% end %>
+        
+        <div class="copybtn">
+          <button class='my_clip_button btn btn-primary' data-clipboard-target='copy-text' data-clipboard-text='Default clipboard text from attribute' id='d_clip_button'>
+            <b>クリップボードにコピーする
+          </button>        
+        </div>
+        
+  </div>
+</div>
+
+<script>
+  function copyTextToClipboard(textVal){
+    // テキストエリアを用意する
+    var copyFrom = document.createElement("textarea");
+    // テキストエリアへ値をセット
+    copyFrom.textContent = textVal;
+   
+    // bodyタグの要素を取得
+    var bodyElm = document.getElementsByTagName("body")[0];
+    // 子要素にテキストエリアを配置
+    bodyElm.appendChild(copyFrom);
+   
+    // テキストエリアの値を選択
+    copyFrom.select();
+    // コピーコマンド発行
+    var retVal = document.execCommand('copy');
+    // 追加テキストエリアを削除
+    bodyElm.removeChild(copyFrom);
+    // 処理結果を返却
+    return retVal;
+  }
+  
+  $('#d_clip_button').click(function(){
+    var target_val = $('#copy-text').val();
+    copyTextToClipboard(target_val);
+  })
+</script>
+
+<script type="text/javascript">
+  $(function(){
+      $('#copy-text').bind('keydown keyup keypress change',function(){
+          var thisValueLength = $(this).val().length;
+          $('.count').html(thisValueLength);
+      });
+      
+    $('.btn-danger, .add_nested_fields_link').on('click', function(){
+  	var footerId = "footer";
+  	//メイン
+  	function footerFixed(){
+  		//ドキュメントの高さ
+  		var dh = document.getElementsByTagName("body")[0].clientHeight;
+  		//フッターのtopからの位置
+  		document.getElementById(footerId).style.top = "0px";
+  		var ft = document.getElementById(footerId).offsetTop;
+  		//フッターの高さ
+  		var fh = document.getElementById(footerId).offsetHeight;
+  		//ウィンドウの高さ
+  		if (window.innerHeight){
+  			var wh = window.innerHeight;
+  		}else if(document.documentElement && document.documentElement.clientHeight != 0){
+  			var wh = document.documentElement.clientHeight;
+  		}
+  		if(ft+fh<wh){
+  			document.getElementById(footerId).style.position = "relative";
+  			document.getElementById(footerId).style.top = (wh-fh-ft-1)+"px";
+  		}
+  	}
+  	
+  	//文字サイズ
+  	function checkFontSize(func){
+  	
+  		//判定要素の追加	
+  		var e = document.createElement("div");
+  		var s = document.createTextNode("S");
+  		e.appendChild(s);
+  		e.style.visibility="hidden"
+  		e.style.position="absolute"
+  		e.style.top="0"
+  		document.body.appendChild(e);
+  		var defHeight = e.offsetHeight;
+  		
+  		//判定関数
+  		function checkBoxSize(){
+  			if(defHeight != e.offsetHeight){
+  				func();
+  				defHeight= e.offsetHeight;
+  			}
+  		}
+  		setInterval(checkBoxSize,1000)
+  	}
+
+
+      $(window).delay(200).queue(function(){
+        console.log('hello');
+        footerFixed();
+      });
+    });
+  })
+  
+
+</script>

@@ -13,3 +13,38 @@
  *= require_tree .
  *= require_self
  */
+
+/* head */
+head {
+  color: #fff;
+}
+
+/* body */
+body {
+  background: #fff;
+}
+
+.top-title {
+  text-shadow:3px 0px 1px #fff;
+}
+
+.user-name {
+  color: #555;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-right: 50px;
+}
+
+.text-center {
+  margin-top: 100px ;
+}
+
+.jumbotron {
+  background: url("/images/top.jpg") center center no-repeat;
+  background-size: 100% auto;
+  height: 500px;
+}
+
+.btn-danger:hover {
+  background-color:#ac2925 ;
+}

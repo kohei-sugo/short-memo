@@ -1,0 +1,13 @@
+.pagination {
+  margin-right: 10px;
+}
+
+.page-text {
+  border: 3px solid #000000;
+  padding: 5px;
+  margin-right: 0.5em;
+}
+
+.page-text :empty {
+  border-color: #000;
+}

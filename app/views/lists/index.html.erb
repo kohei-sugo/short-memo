@@ -1,0 +1,23 @@
+<h1>アイデア一覧</h1>
+
+<%= link_to '新規メモを作成する',lists_path , method: :post, class: 'newbtn btn btn-lg btn-primary' %>
+
+<div class="row">
+  <% @lists.each do |list| %>
+    <div class="list col-md-offset-1 col-md-3">
+      <%= link_to edit_list_url(list.id, data: {turbolinks: false}), id: list.id, detail: list.detail do %>
+        <div class="content">
+          <div class="list-title">
+            <strong><%= list.title %></strong>
+          </div>
+          <div class="index-title">
+            <%= list.detail.truncate(20) %>
+          </div>
+        </div>
+      <% end %>
+      <%= link_to "Delete", list, method: :delete, data: { confirm: "削除してもよろしいですか?" }, class: 'btn btn-danger btn-xs deletebtn' %>  
+    </div>
+  <% end %>
+</div>
+
+<div class="text-right"><%= paginate @lists %></div>

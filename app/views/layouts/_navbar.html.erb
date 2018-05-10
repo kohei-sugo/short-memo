@@ -1,0 +1,27 @@
+<header>
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <%= link_to "shortmemo", root_path, class: "navbar-brand", data: {turbolinks: false} %>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <% if logged_in? %>
+            <li class="user-name">ユーザー名:<%= current_user.name %></li>
+            <li><%= link_to 'アイデアリスト', lists_path, data: {turbolinks: false} %></li>
+            <li><%= link_to 'ログアウト', logout_path, method: :delete, data: {turbolinks: false} %></li>
+          <% else %>
+            <li><%= link_to '新規登録', signup_path, data: {turbolinks: false} %></li>
+            <li><%= link_to 'ログイン', login_path, data: {turbolinks: false} %></li>
+          <% end %>
+        </ul>        
+      </div>
+    </div>
+  </nav>
+</header>

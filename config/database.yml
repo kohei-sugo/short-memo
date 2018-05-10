@@ -48,7 +48,9 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
   database: short-memo_production
   username: short-memo
   password: <%= ENV['SHORT-MEMO_DATABASE_PASSWORD'] %>
